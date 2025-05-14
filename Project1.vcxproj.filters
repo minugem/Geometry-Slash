@@ -54,16 +54,10 @@
     <ClCompile Include="scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scenecheckerboards.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scenebouncingballs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
@@ -99,10 +93,10 @@
     <ClCompile Include="animatedsprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sceneanimatedsprite.cpp">
+    <ClCompile Include="scenegame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scenegame.cpp">
+    <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,12 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scenecheckerboards.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scenebouncingballs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inlinehelper.h">
@@ -191,9 +179,6 @@
     <ClInclude Include="animatedsprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sceneanimatedsprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="particle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -201,6 +186,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scenegame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

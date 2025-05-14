@@ -9,6 +9,9 @@
 // Local includes:
 #include "scene.h"
 
+#include "player.h"  
+
+
 // Forward declarations:
 class Renderer;
 class Sprite;
@@ -34,6 +37,9 @@ private:
     SceneGame& operator=(const SceneGame& other);
 
     Sprite* m_pCheckerboard;
+    Player* m_pPlayer;
 };
+
+
 
 #endif // SCENEGAME_H

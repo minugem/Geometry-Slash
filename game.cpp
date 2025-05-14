@@ -8,10 +8,7 @@
 #include "logmanager.h"
 #include "sprite.h"
 
-#include "scenecheckerboards.h"
-#include "scenebouncingballs.h"
 #include "scenesplashaut.h"
-#include "sceneanimatedsprite.h"
 
 #include "scenegame.h"
 
@@ -88,18 +85,6 @@ bool Game::Initialise()
 	pScene = new SceneSplashAut();
 	pScene->Initialise(*m_pRenderer);
 	pScene->SyncCurrentScene(&m_iCurrentScene, &m_scenes);
-	m_scenes.push_back(pScene);
-
-	pScene = new SceneCheckerboards();
-	pScene->Initialise(*m_pRenderer);
-	m_scenes.push_back(pScene);
-
-	pScene = new SceneBouncingBalls();
-	pScene->Initialise(*m_pRenderer);
-	m_scenes.push_back(pScene);
-
-	pScene = new SceneAnimatedSprite();
-	pScene->Initialise(*m_pRenderer);
 	m_scenes.push_back(pScene);
 
 	pScene = new SceneGame();

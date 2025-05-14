@@ -1,0 +1,36 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+// Forward declarations
+class Renderer;
+class Sprite;
+
+class Player
+{
+public:
+    Player();
+    ~Player();
+
+    bool Initialise(Renderer& renderer);
+    void Process(float deltaTime);
+    void Draw(Renderer& renderer);
+
+    void SetX(int x);
+    void SetY(int y);
+    int GetX() const;
+    int GetY() const;
+    int GetWidth() const;
+    int GetHeight() const;
+
+
+protected:
+private:
+    Player(const Player& other);
+    Player& operator=(const Player& other);
+
+    Sprite* m_pSprite;
+    int m_x;
+    int m_y;
+};
+
+#endif // PLAYER_H
