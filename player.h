@@ -15,10 +15,10 @@ public:
     void Process(float deltaTime);
     void Draw(Renderer& renderer);
 
-    void SetX(int x);
-    void SetY(int y);
-    int GetX() const;
-    int GetY() const;
+    void SetX(float x);
+    void SetY(float y);
+    float GetX() const;
+    float GetY() const;
     int GetWidth() const;
     int GetHeight() const;
 
@@ -29,8 +29,8 @@ private:
     Player& operator=(const Player& other);
 
     Sprite* m_pSprite;
-    int m_x;
-    int m_y;
+    float m_x;
+    float m_y;
 };
 
 #endif // PLAYER_H

@@ -6,13 +6,18 @@
 // Local includes:
 #include "renderer.h"
 #include "sprite.h"
+#include "inputsystem.h"
+#include "game.h" 
 
 // Library includes:
 #include <cassert>
 
 SceneGame::SceneGame()
     : m_pCheckerboard(0)
-    , m_pPlayer(0) // Initialize pointer
+    , m_pPlayer(0) 
+    , m_pInputSystem(0) 
+    , m_quitRequested(false) // Initialize
+
 {
 }
 
@@ -22,6 +27,8 @@ SceneGame::~SceneGame()
     m_pCheckerboard = 0;
     delete m_pPlayer; // Clean up
     m_pPlayer = 0;
+    delete m_pInputSystem; // Clean up
+    m_pInputSystem = 0;
 }
 
 
@@ -36,7 +43,6 @@ bool SceneGame::Initialise(Renderer& renderer)
         return false;
     }
 
-    // Tile background code here...
 
     // Create and initialize player
     m_pPlayer = new Player();
@@ -53,14 +59,44 @@ bool SceneGame::Initialise(Renderer& renderer)
     m_pPlayer->SetX(centerX);
     m_pPlayer->SetY(centerY);
 
+    m_pInputSystem = new InputSystem();
+    m_pInputSystem->Initialise();
+
     return true;
 }
 
 
-void SceneGame::Process(float /*deltaTime*/)
+void SceneGame::Process(float deltaTime)
 {
-    // Static background: nothing to update
+    // Quit on Q key press
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_Q) == BS_PRESSED)
+    {
+        Game::GetInstance().Quit();
+        return; // Optionally return early
+    }
+
+    float moveSpeed = 250.0f;
+    float dx = 0.0f, dy = 0.0f;
+
+    // WASD movement
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_W) == BS_PRESSED)
+        dy -= moveSpeed * deltaTime;
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_S) == BS_PRESSED)
+        dy += moveSpeed * deltaTime;
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_A) == BS_PRESSED)
+        dx -= moveSpeed * deltaTime;
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_D) == BS_PRESSED)
+        dx += moveSpeed * deltaTime;
+
+    if (m_pPlayer)
+    {
+        m_pPlayer->SetX(m_pPlayer->GetX() + dx);
+        m_pPlayer->SetY(m_pPlayer->GetY() + dy);
+
+        m_pPlayer->Process(deltaTime);
+    }
 }
+
 
 void SceneGame::Draw(Renderer& renderer)
 {

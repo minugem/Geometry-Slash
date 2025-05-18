@@ -43,22 +43,22 @@ void Player::Draw(Renderer& renderer)
     }
 }
 
-void Player::SetX(int x)
+void Player::SetX(float x)
 {
     m_x = x;
 }
 
-void Player::SetY(int y)
+void Player::SetY(float y)
 {
     m_y = y;
 }
 
-int Player::GetX() const
+float Player::GetX() const
 {
     return m_x;
 }
 
-int Player::GetY() const
+float Player::GetY() const
 {
     return m_y;
 }

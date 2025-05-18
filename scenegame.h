@@ -2,6 +2,7 @@
 
 #ifndef SCENEGAME_H
 #define SCENEGAME_H
+class InputSystem;
 
 // Library includes:
 #include <vector>
@@ -31,13 +32,16 @@ public:
     virtual void SyncCurrentScene(int* m_iCurrentScene, std::vector<Scene*>* m_scenes);
 
 protected:
+    bool m_quitRequested;
 
 private:
     SceneGame(const SceneGame& other);
     SceneGame& operator=(const SceneGame& other);
-
+    InputSystem* m_pInputSystem; 
     Sprite* m_pCheckerboard;
     Player* m_pPlayer;
+    bool QuitRequested() const { return m_quitRequested; }
+
 };
 
 
