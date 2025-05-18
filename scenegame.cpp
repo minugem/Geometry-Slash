@@ -17,6 +17,7 @@ SceneGame::SceneGame()
     , m_pPlayer(0) 
     , m_pInputSystem(0) 
     , m_quitRequested(false) // Initialize
+    , m_pBullet(0)
 
 {
 }
@@ -29,6 +30,7 @@ SceneGame::~SceneGame()
     m_pPlayer = 0;
     delete m_pInputSystem; // Clean up
     m_pInputSystem = 0;
+    delete m_pBullet;
 }
 
 
@@ -61,6 +63,26 @@ bool SceneGame::Initialise(Renderer& renderer)
 
     m_pInputSystem = new InputSystem();
     m_pInputSystem->Initialise();
+    
+    const int maxBullets = 10;
+    for (int i = 0; i < maxBullets; ++i)
+    {
+        Bullet* bullet = new Bullet();
+        if (!bullet->Initialise(renderer))
+            return false;
+        bullet->SetActive(false);
+        m_bullets.push_back(bullet);
+    }
+
+    m_bulletCooldown = 0.15f; // 0.15 seconds between shots (decrease for faster fire)
+    m_bulletTimer = 0.0f;
+
+
+    m_pBullet = new Bullet();
+    if (!m_pBullet->Initialise(renderer))
+    {
+        return false;
+    }
 
     return true;
 }
@@ -94,7 +116,36 @@ void SceneGame::Process(float deltaTime)
         m_pPlayer->SetY(m_pPlayer->GetY() + dy);
 
         m_pPlayer->Process(deltaTime);
+
+
     }
+
+    m_bulletTimer -= deltaTime;
+
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_SPACE) == BS_PRESSED && m_bulletTimer <= 0.0f)
+    {
+        // Find an inactive bullet
+        for (auto bullet : m_bullets)
+        {
+            if (!bullet->IsActive())
+            {
+                float bulletX = m_pPlayer->GetX() + (m_pPlayer->GetWidth() - bullet->GetWidth()) / 2;
+                float bulletY = m_pPlayer->GetY() - bullet->GetHeight();
+                bullet->SetPosition(bulletX, bulletY);
+                bullet->SetActive(true);
+                m_bulletTimer = m_bulletCooldown; // Reset cooldown
+                break; // Only fire one bullet per press
+            }
+        }
+    }
+
+    // Update all bullets
+    for (auto bullet : m_bullets)
+    {
+        if (bullet->IsActive())
+            bullet->Process(deltaTime);
+    }
+
 }
 
 
@@ -122,6 +173,14 @@ void SceneGame::Draw(Renderer& renderer)
     {
         m_pPlayer->Draw(renderer);
     }
+
+    for (auto bullet : m_bullets)
+    {
+        if (bullet->IsActive())
+            bullet->Draw(renderer);
+    }
+
+
 }
 
 

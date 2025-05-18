@@ -9,8 +9,9 @@ class InputSystem;
 
 // Local includes:
 #include "scene.h"
-
+#include "bullet.h"
 #include "player.h"  
+#include <vector>
 
 
 // Forward declarations:
@@ -41,7 +42,10 @@ private:
     Sprite* m_pCheckerboard;
     Player* m_pPlayer;
     bool QuitRequested() const { return m_quitRequested; }
-
+    Bullet* m_pBullet;
+    std::vector<Bullet*> m_bullets;
+    float m_bulletCooldown;
+    float m_bulletTimer;
 };
 
 
