@@ -21,6 +21,8 @@ public:
     float GetY() const;
     int GetWidth() const;
     int GetHeight() const;
+    void SetAngle(float angle);
+    float GetAngle() const;
 
 
 protected:
@@ -31,6 +33,8 @@ private:
     Sprite* m_pSprite;
     float m_x;
     float m_y;
+    float m_angle;
+
 };
 
 #endif // PLAYER_H

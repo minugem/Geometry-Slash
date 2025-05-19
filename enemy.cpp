@@ -3,37 +3,62 @@
 #include "sprite.h"
 
 Enemy::Enemy()
-    : m_speed(100.0f) // Example speed
+    : m_pSprite(0), m_x(0), m_y(0), m_health(100), m_hitTimer(0.0f)
 {
-    // Entity's constructor is called automatically
 }
 
-Enemy::~Enemy() {}
+Enemy::~Enemy()
+{
+    delete m_pSprite;
+}
 
 bool Enemy::Initialise(Renderer& renderer)
 {
     m_pSprite = renderer.CreateSprite("..\\assets\\enemy.png");
-    if (!m_pSprite)
-        return false;
-    m_bAlive = true;
-    m_position.Set(400, 100); // Example start position
-    return true;
+    return m_pSprite != 0;
 }
 
 void Enemy::Process(float deltaTime)
 {
-    // Example: Move enemy down the screen
-    m_position.y += m_speed * deltaTime;
-
-    // Optionally: Add logic for enemy AI, collision, etc.
+    if (m_hitTimer > 0.0f) {
+        m_hitTimer -= deltaTime;
+        if (m_hitTimer <= 0.0f && m_pSprite) {
+            m_pSprite->SetRedTint(1.0f);
+            m_pSprite->SetGreenTint(1.0f);
+            m_pSprite->SetBlueTint(1.0f);
+        }
+    }
 }
 
 void Enemy::Draw(Renderer& renderer)
 {
-    if (m_pSprite && m_bAlive)
+    if (m_pSprite && m_health > 0)
     {
-        m_pSprite->SetX(static_cast<int>(m_position.x));
-        m_pSprite->SetY(static_cast<int>(m_position.y));
+        m_pSprite->SetX(m_x);
+        m_pSprite->SetY(m_y);
         m_pSprite->Draw(renderer);
     }
 }
+
+void Enemy::SetPosition(float x, float y)
+{
+    m_x = x;
+    m_y = y;
+}
+
+void Enemy::TakeDamage(int amount)
+{
+    m_health -= amount;
+    m_hitTimer = 0.1f;
+    if (m_pSprite) {
+        m_pSprite->SetRedTint(1.0f);
+        m_pSprite->SetGreenTint(0.0f);
+        m_pSprite->SetBlueTint(0.0f);
+    }
+}
+
+float Enemy::GetX() const { return m_x; }
+float Enemy::GetY() const { return m_y; }
+int Enemy::GetWidth() const { return m_pSprite ? m_pSprite->GetWidth() : 0; }
+int Enemy::GetHeight() const { return m_pSprite ? m_pSprite->GetHeight() : 0; }
+int Enemy::GetHealth() const { return m_health; }

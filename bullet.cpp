@@ -29,6 +29,11 @@ float Bullet::GetY() const
     return m_y;
 }
 
+float Bullet::GetX() const
+{
+    return m_x;
+}
+
 void Bullet::Process(float deltaTime)
 {
     if (m_active)

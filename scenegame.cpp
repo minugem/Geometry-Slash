@@ -16,8 +16,11 @@ SceneGame::SceneGame()
     : m_pCheckerboard(0)
     , m_pPlayer(0) 
     , m_pInputSystem(0) 
-    , m_quitRequested(false) // Initialize
+    , m_quitRequested(false) 
     , m_pBullet(0)
+    , m_pEnemy(0)
+
+
 
 {
 }
@@ -34,12 +37,16 @@ SceneGame::~SceneGame()
 	m_pBullet = 0;
     delete m_pControls;
     m_pControls = 0;
+    delete m_pEnemy;
+    m_pEnemy = 0;
 
 }
 
 
 bool SceneGame::Initialise(Renderer& renderer)
 {
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_SetRelativeMouseMode(SDL_FALSE);
     int screenWidth = renderer.GetWidth();
     int screenHeight = renderer.GetHeight();
 
@@ -48,6 +55,13 @@ bool SceneGame::Initialise(Renderer& renderer)
     {
         return false;
     }
+
+    m_pEnemy = new Enemy();
+    if (!m_pEnemy->Initialise(renderer))
+        return false;
+
+    // Position enemy somewhere (e.g., center-top)
+    m_pEnemy->SetPosition((screenWidth - m_pEnemy->GetWidth()) / 2, 100.0f);
 
 
     // Create and initialize player
@@ -113,6 +127,20 @@ void SceneGame::Process(float deltaTime)
 
     float moveSpeed = 250.0f;
     float dx = 0.0f, dy = 0.0f;
+    float rotateSpeed = 180.0f; // degrees per second
+    m_pPlayer->SetAngle(0.0f);
+
+
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_A) == BS_PRESSED)
+    {
+        m_pPlayer->SetAngle(-15.0f);
+    }
+
+    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_D) == BS_PRESSED)
+    {
+        m_pPlayer->SetAngle(15.0f);
+    }
+
 
     // WASD movement
     if (m_pInputSystem->GetKeyState(SDL_SCANCODE_W) == BS_PRESSED)
@@ -159,6 +187,40 @@ void SceneGame::Process(float deltaTime)
         if (bullet->IsActive())
             bullet->Process(deltaTime);
     }
+
+    if (m_pEnemy)
+        m_pEnemy->Process(deltaTime);
+
+
+    // Simple AABB collision
+    if (m_pEnemy && m_pEnemy->GetHealth() > 0)
+    {
+        for (auto bullet : m_bullets)
+        {
+            if (bullet->IsActive())
+            {
+                float bx = bullet->GetX();
+                float by = bullet->GetY();
+                int bw = bullet->GetWidth();
+                int bh = bullet->GetHeight();
+
+                float ex = m_pEnemy->GetX();
+                float ey = m_pEnemy->GetY();
+                int ew = m_pEnemy->GetWidth();
+                int eh = m_pEnemy->GetHeight();
+
+                // Axis-Aligned Bounding Box (AABB) collision
+                if (bx < ex + ew && bx + bw > ex &&
+                    by < ey + eh && by + bh > ey)
+                {
+                    bullet->SetActive(false); // Bullet disappears
+                    m_pEnemy->TakeDamage(1);  // Enemy loses 1 health
+                    break; // Only one bullet can hit at a time
+                }
+            }
+        }
+    }
+
 
 
     if (m_showControls && m_pControls)
@@ -244,6 +306,12 @@ void SceneGame::Draw(Renderer& renderer)
         m_pControls->SetAlpha(m_controlsAlpha);  // Set transparency (0 = invisible, 1 = opaque)
         m_pControls->Draw(renderer);
     }
+
+    if (m_pEnemy && m_pEnemy->GetHealth() > 0)
+    {
+        m_pEnemy->Draw(renderer);
+    }
+
 
 
 

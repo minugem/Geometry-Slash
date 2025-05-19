@@ -12,6 +12,7 @@ class InputSystem;
 #include "bullet.h"
 #include "player.h"  
 #include <vector>
+#include "enemy.h"
 
 
 // Forward declarations:
@@ -51,6 +52,7 @@ private:
     std::vector<Bullet*> m_bullets;
     float m_bulletCooldown;
     float m_bulletTimer;
+    Enemy* m_pEnemy;
 };
 
 

@@ -18,6 +18,7 @@ public:
 
     void SetPosition(float x, float y);
     float GetY() const;
+    float GetX() const;
     bool IsActive() const { return m_active; }
     void SetActive(bool active) { m_active = active; }
 

@@ -22,6 +22,7 @@
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="ball.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="ball.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="imgui\imconfig.h" />

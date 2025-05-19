@@ -50,6 +50,7 @@ private:
 	// Member data: 
 public:
 
+
 protected:
 	Texture* m_pTexture; 
 	int m_x;

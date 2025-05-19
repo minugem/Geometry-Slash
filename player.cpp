@@ -7,6 +7,7 @@ Player::Player()
     : m_pSprite(0)
     , m_x(0)
     , m_y(0)
+    , m_angle(0.0f) 
 {
 }
 
@@ -40,6 +41,7 @@ void Player::Draw(Renderer& renderer)
         m_pSprite->SetX(m_x);
         m_pSprite->SetY(m_y);
         m_pSprite->Draw(renderer);
+        m_pSprite->SetAngle(m_angle);    
     }
 }
 
@@ -73,3 +75,12 @@ int Player::GetHeight() const
     return m_pSprite ? m_pSprite->GetHeight() : 0;
 }
 
+void Player::SetAngle(float angle)
+{
+    m_angle = angle;
+}
+
+float Player::GetAngle() const
+{
+    return m_angle;
+}
