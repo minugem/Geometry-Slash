@@ -11,6 +11,8 @@
 
 // Library includes:
 #include <cassert>
+#include <iostream>
+#include "logmanager.h"
 
 SceneGame::SceneGame()
     : m_pCheckerboard(0)
@@ -41,12 +43,19 @@ SceneGame::~SceneGame()
     m_pControls = 0;
     delete m_pEnemy;
     m_pEnemy = 0;
+    if (m_pPewSound)
+    {
+        m_pPewSound->release();
+        m_pPewSound = nullptr;
+    }
+
 
 }
 
 
 bool SceneGame::Initialise(Renderer& renderer)
 {
+
     SDL_ShowCursor(SDL_ENABLE);
     SDL_SetRelativeMouseMode(SDL_FALSE);
     int screenWidth = renderer.GetWidth();
@@ -124,6 +133,30 @@ bool SceneGame::Initialise(Renderer& renderer)
     m_controlsAlpha = 0.0f;     // Start fully transparent
     m_controlsTimer = 0.0f;     // Timer for how long it's been shown
     m_showControls = true;      // Show at start
+
+
+    FMOD::Channel* testChannel = nullptr;
+    m_pFmodSystem->playSound(m_pFmodSound1, 0, false, &testChannel);
+
+
+    //FMOD
+    if (FMOD::System_Create(&m_pFmodSystem) != FMOD_OK)
+    {
+        LogManager::GetInstance().Log("FMOD System failed to create!");
+        std::cout << "FMOD System failed to create! (console edition)" << std::endl;
+        return false;
+    }
+
+    if (m_pFmodSystem->init(512, FMOD_INIT_NORMAL, 0) != FMOD_OK)
+    {
+        LogManager::GetInstance().Log("FMOD System failed to create!");
+        std::cout << "FMOD System failed to create! (console edition)" << std::endl;
+        return false;
+    }
+
+    //FMOD Test
+    m_pFmodSystem->createSound("..\\assets\\pew.wav", FMOD_DEFAULT, 0, &m_pFmodSound1);
+    m_pFmodSound1->setMode(FMOD_LOOP_OFF);
 
 
     return true;
@@ -207,6 +240,9 @@ void SceneGame::Process(float deltaTime)
 
     if (m_pInputSystem->GetKeyState(SDL_SCANCODE_SPACE) == BS_PRESSED && m_bulletTimer <= 0.0f)
     {
+
+
+        m_pFmodSystem->playSound(m_pFmodSound1, 0, false, 0);
         // Find an inactive bullet
         for (auto bullet : m_bullets)
         {
@@ -219,6 +255,7 @@ void SceneGame::Process(float deltaTime)
                 m_bulletTimer = m_bulletCooldown; // Reset cooldown
                 break; // Only fire one bullet per press
             }
+
         }
     }
 

@@ -6,6 +6,7 @@ class InputSystem;
 
 // Library includes:
 #include <vector>
+#include "fmod.hpp"
 
 // Local includes:
 #include "scene.h"
@@ -58,7 +59,9 @@ private:
     float m_gameTimer;       
     bool m_timerStarted;
     std::vector<EnemyBullet*> m_enemyBullets;
-
+    FMOD::System* m_pFmodSystem = nullptr;
+    FMOD::Sound* m_pFmodSound1 = nullptr;
+    FMOD::Sound* m_pPewSound = nullptr; // For your pew sound
 };
 
 

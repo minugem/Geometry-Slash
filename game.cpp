@@ -60,6 +60,10 @@ void Game::Quit()
 
 bool Game::Initialise()
 {
+
+	FMOD::Channel* testChannel = nullptr;
+	m_pFmodSystem->playSound(m_pFmodSound1, 0, false, &testChannel);
+
 	int bbWidth = 1080;
 	int bbHeight = 720;
 
@@ -121,7 +125,7 @@ bool Game::Initialise()
 	m_pFmodSystem->createSound("..\\assets\\swish.wav", FMOD_DEFAULT, 0, &m_pFmodSound1);
 	m_pFmodSound1->setMode(FMOD_LOOP_OFF);
 
-	//m_pFmodSystem->playSound(m_pFmodSound1, 0, false, 0);
+	m_pFmodSystem->playSound(m_pFmodSound1, 0, false, 0);
 
 	return true;
 }

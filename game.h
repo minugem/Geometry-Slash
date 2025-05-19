@@ -42,7 +42,10 @@ private:
 
 	// Member data: 
 public:
-	
+	FMOD::System* m_pFmodSystem;
+	FMOD::Sound* m_pFmodSound1;
+	FMOD_RESULT result;
+
 
 protected:
 	static Game* sm_pInstance;
@@ -56,9 +59,7 @@ protected:
 	
 	bool m_bShowDebugWindow;
 	
-	FMOD::System* m_pFmodSystem;
-	FMOD::Sound* m_pFmodSound1;
-	FMOD_RESULT result;
+
 
 	_int64 m_iLastTime;
 	float m_fExecutionTime;
