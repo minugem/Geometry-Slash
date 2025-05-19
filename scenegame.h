@@ -13,6 +13,7 @@ class InputSystem;
 #include "player.h"  
 #include <vector>
 #include "enemy.h"
+#include "enemybullet.h"
 
 
 // Forward declarations:
@@ -25,6 +26,7 @@ class SceneGame : public Scene
 public:
     SceneGame();
     virtual ~SceneGame();
+    void SpawnEnemyBullet(float spawnX, float spawnY, float targetX, float targetY, float speed);
 
     virtual bool Initialise(Renderer& renderer);
     virtual void Process(float deltaTime);
@@ -55,6 +57,8 @@ private:
     Enemy* m_pEnemy;
     float m_gameTimer;       
     bool m_timerStarted;
+    std::vector<EnemyBullet*> m_enemyBullets;
+
 };
 
 

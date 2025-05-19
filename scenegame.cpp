@@ -52,7 +52,6 @@ bool SceneGame::Initialise(Renderer& renderer)
     int screenWidth = renderer.GetWidth();
     int screenHeight = renderer.GetHeight();
     m_gameTimer = 0.0f;
-    m_timerStarted = true; 
 
     m_pCheckerboard = renderer.CreateSprite("..\\assets\\background.png");
     if (m_pCheckerboard == 0)
@@ -63,6 +62,17 @@ bool SceneGame::Initialise(Renderer& renderer)
     m_pEnemy = new Enemy();
     if (!m_pEnemy->Initialise(renderer))
         return false;
+
+    const int maxEnemyBullets = 10;
+    for (int i = 0; i < maxEnemyBullets; ++i)
+    {
+        EnemyBullet* eb = new EnemyBullet();
+        if (!eb->Initialise(renderer))
+            return false;
+        eb->SetActive(false);
+        m_enemyBullets.push_back(eb);
+    }
+
 
     // Position enemy somewhere (e.g., center-top)
     m_pEnemy->SetPosition((screenWidth - m_pEnemy->GetWidth()) / 2, 100.0f);
@@ -123,26 +133,29 @@ bool SceneGame::Initialise(Renderer& renderer)
 void SceneGame::Process(float deltaTime)
 {
 
+    float spawnX = m_pEnemy->GetX() ;
+    float spawnY = m_pEnemy->GetY() ;
+    float targetX = m_pPlayer->GetX();
+    float targetY = m_pPlayer->GetY();
+
+    float prevGameTimer = m_gameTimer;
+
+    // Advance timer
     if (m_timerStarted)
     {
         m_gameTimer += deltaTime;
     }
 
-    if (m_timerStarted)
+    // Spawn at 2 seconds
+    if (prevGameTimer < 2.0f && m_gameTimer >= 2.0f)
     {
-        m_gameTimer += deltaTime;
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
+    }
 
-        // Example: Do something at 5 seconds
-        if (m_gameTimer > 5.0f && m_gameTimer - deltaTime <= 5.0f)
-        {
-            // Action to perform at 5 seconds (e.g., spawn an enemy)
-        }
-
-        // Example: Do something at 10 seconds
-        if (m_gameTimer > 10.0f && m_gameTimer - deltaTime <= 10.0f)
-        {
-            // Action to perform at 10 seconds (e.g., increase difficulty)
-        }
+    // Spawn at 6 seconds
+    if (prevGameTimer < 6.0f && m_gameTimer >= 6.0f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
     }
 
 
@@ -281,8 +294,20 @@ void SceneGame::Process(float deltaTime)
             // Done
             m_controlsAlpha = 0.0f;
             m_showControls = false;
+            if (!m_timerStarted)
+            {
+                m_timerStarted = true;
+                m_gameTimer = 0.0f; 
+            }
         }
     }
+
+    for (auto eb : m_enemyBullets)
+    {
+        if (eb->IsActive())
+            eb->Process(deltaTime);
+    }
+
 
 
 }
@@ -311,6 +336,7 @@ void SceneGame::Draw(Renderer& renderer)
     if (m_pPlayer && m_pPlayer->GetHealth() > 0)
     {
         m_pPlayer->Draw(renderer);
+
     }
 
 
@@ -341,6 +367,13 @@ void SceneGame::Draw(Renderer& renderer)
         m_pEnemy->Draw(renderer);
     }
 
+    for (auto eb : m_enemyBullets)
+    {
+        if (eb->IsActive())
+            eb->Draw(renderer);
+    }
+
+
 
 
 
@@ -355,4 +388,18 @@ void SceneGame::DebugDraw()
 void SceneGame::SyncCurrentScene(int* /*m_iCurrentScene*/, std::vector<Scene*>* /*m_scenes*/)
 {
     // No scene switching logic for this simple scene
+}
+
+void SceneGame::SpawnEnemyBullet(float spawnX, float spawnY, float targetX, float targetY, float speed)
+{
+    for (auto eb : m_enemyBullets)
+    {
+        if (!eb->IsActive())
+        {
+            eb->SetPosition(spawnX, spawnY);
+            eb->SetTarget(targetX, targetY, speed);
+            eb->SetActive(true);
+            break;
+        }
+    }
 }

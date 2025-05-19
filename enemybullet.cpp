@@ -4,13 +4,14 @@
 #include <cmath>
 
 EnemyBullet::EnemyBullet()
-    : m_pSprite(0), m_x(0), m_y(0), m_dirX(0), m_dirY(0), m_speed(300.0f), m_active(false)
+    : m_pSprite(0), m_x(0), m_y(0), m_dx(0), m_dy(0), m_speed(0), m_active(false)
 {
 }
 
 EnemyBullet::~EnemyBullet()
 {
     delete m_pSprite;
+    m_pSprite = 0;
 }
 
 bool EnemyBullet::Initialise(Renderer& renderer)
@@ -19,30 +20,37 @@ bool EnemyBullet::Initialise(Renderer& renderer)
     return m_pSprite != 0;
 }
 
-void EnemyBullet::Fire(float startX, float startY, float targetX, float targetY)
+void EnemyBullet::SetPosition(float x, float y)
 {
-    m_x = startX;
-    m_y = startY;
-    float dx = targetX - startX;
-    float dy = targetY - startY;
-    float len = sqrtf(dx * dx + dy * dy);
-    if (len > 0)
+    m_x = x;
+    m_y = y;
+}
+
+void EnemyBullet::SetTarget(float targetX, float targetY, float speed)
+{
+    float dirX = targetX - m_x;
+    float dirY = targetY - m_y;
+    float length = std::sqrt(dirX * dirX + dirY * dirY);
+    if (length != 0)
     {
-        m_dirX = dx / len;
-        m_dirY = dy / len;
+        m_dx = dirX / length;
+        m_dy = dirY / length;
     }
-    m_active = true;
+    else
+    {
+        m_dx = 0;
+        m_dy = 0;
+    }
+    m_speed = speed;
 }
 
 void EnemyBullet::Process(float deltaTime)
 {
     if (m_active)
     {
-        m_x += m_dirX * m_speed * deltaTime;
-        m_y += m_dirY * m_speed * deltaTime;
-        // Deactivate if off screen (adjust bounds as needed)
-        if (m_x < -100 || m_x > 2000 || m_y < -100 || m_y > 2000)
-            m_active = false;
+        m_x += m_dx * m_speed * deltaTime;
+        m_y += m_dy * m_speed * deltaTime;
+        // Optionally, deactivate if off-screen
     }
 }
 
@@ -50,11 +58,15 @@ void EnemyBullet::Draw(Renderer& renderer)
 {
     if (m_active && m_pSprite)
     {
-        m_pSprite->SetX(static_cast<int>(m_x));
-        m_pSprite->SetY(static_cast<int>(m_y));
+        m_pSprite->SetX(m_x);
+        m_pSprite->SetY(m_y);
         m_pSprite->Draw(renderer);
     }
 }
 
+bool EnemyBullet::IsActive() const { return m_active; }
+void EnemyBullet::SetActive(bool active) { m_active = active; }
+float EnemyBullet::GetX() const { return m_x; }
+float EnemyBullet::GetY() const { return m_y; }
 int EnemyBullet::GetWidth() const { return m_pSprite ? m_pSprite->GetWidth() : 0; }
 int EnemyBullet::GetHeight() const { return m_pSprite ? m_pSprite->GetHeight() : 0; }
