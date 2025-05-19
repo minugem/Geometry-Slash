@@ -7,7 +7,8 @@ Player::Player()
     : m_pSprite(0)
     , m_x(0)
     , m_y(0)
-    , m_angle(0.0f) 
+    , m_angle(0.0f)
+    , m_health(100)  // Initialize health to 100 or any default value
 {
 }
 
@@ -41,7 +42,7 @@ void Player::Draw(Renderer& renderer)
         m_pSprite->SetX(m_x);
         m_pSprite->SetY(m_y);
         m_pSprite->Draw(renderer);
-        m_pSprite->SetAngle(m_angle);    
+        m_pSprite->SetAngle(m_angle);
     }
 }
 
@@ -83,4 +84,15 @@ void Player::SetAngle(float angle)
 float Player::GetAngle() const
 {
     return m_angle;
+}
+
+// Health methods
+void Player::SetHealth(int health)
+{
+    m_health = health;
+}
+
+int Player::GetHealth() const
+{
+    return m_health;
 }

@@ -24,6 +24,9 @@ public:
     void SetAngle(float angle);
     float GetAngle() const;
 
+    // Health related methods
+    void SetHealth(int health);
+    int GetHealth() const;
 
 protected:
 private:
@@ -35,6 +38,7 @@ private:
     float m_y;
     float m_angle;
 
+    int m_health;  // Added health variable
 };
 
 #endif // PLAYER_H

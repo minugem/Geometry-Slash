@@ -19,6 +19,8 @@ SceneGame::SceneGame()
     , m_quitRequested(false) 
     , m_pBullet(0)
     , m_pEnemy(0)
+    , m_gameTimer(0.0f)
+    , m_timerStarted(false)
 
 
 
@@ -49,6 +51,8 @@ bool SceneGame::Initialise(Renderer& renderer)
     SDL_SetRelativeMouseMode(SDL_FALSE);
     int screenWidth = renderer.GetWidth();
     int screenHeight = renderer.GetHeight();
+    m_gameTimer = 0.0f;
+    m_timerStarted = true; 
 
     m_pCheckerboard = renderer.CreateSprite("..\\assets\\background.png");
     if (m_pCheckerboard == 0)
@@ -118,6 +122,30 @@ bool SceneGame::Initialise(Renderer& renderer)
 
 void SceneGame::Process(float deltaTime)
 {
+
+    if (m_timerStarted)
+    {
+        m_gameTimer += deltaTime;
+    }
+
+    if (m_timerStarted)
+    {
+        m_gameTimer += deltaTime;
+
+        // Example: Do something at 5 seconds
+        if (m_gameTimer > 5.0f && m_gameTimer - deltaTime <= 5.0f)
+        {
+            // Action to perform at 5 seconds (e.g., spawn an enemy)
+        }
+
+        // Example: Do something at 10 seconds
+        if (m_gameTimer > 10.0f && m_gameTimer - deltaTime <= 10.0f)
+        {
+            // Action to perform at 10 seconds (e.g., increase difficulty)
+        }
+    }
+
+
     // Quit on Q key press
     if (m_pInputSystem->GetKeyState(SDL_SCANCODE_Q) == BS_PRESSED)
     {
@@ -280,10 +308,11 @@ void SceneGame::Draw(Renderer& renderer)
         }
     }
 
-    if (m_pPlayer)
+    if (m_pPlayer && m_pPlayer->GetHealth() > 0)
     {
         m_pPlayer->Draw(renderer);
     }
+
 
     for (auto bullet : m_bullets)
     {

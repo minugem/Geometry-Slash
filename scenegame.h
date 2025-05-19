@@ -53,6 +53,8 @@ private:
     float m_bulletCooldown;
     float m_bulletTimer;
     Enemy* m_pEnemy;
+    float m_gameTimer;       
+    bool m_timerStarted;
 };
 
 
