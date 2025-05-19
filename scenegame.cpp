@@ -179,14 +179,27 @@ void SceneGame::Process(float deltaTime)
         m_gameTimer += deltaTime;
     }
 
-    // Spawn at 2 seconds
+    if (prevGameTimer < 1.0f && m_gameTimer >= 1.0f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
+    }
+
     if (prevGameTimer < 2.0f && m_gameTimer >= 2.0f)
     {
         SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
     }
 
-    // Spawn at 6 seconds
-    if (prevGameTimer < 6.0f && m_gameTimer >= 6.0f)
+    if (prevGameTimer < 3.0f && m_gameTimer >= 3.0f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 3.5f && m_gameTimer >= 3.5f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 4.0f && m_gameTimer >= 4.0f)
     {
         SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
     }

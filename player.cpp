@@ -5,12 +5,12 @@
 
 Player::Player()
     : m_pSprite(0)
+    , m_pBgSprite(0)
     , m_x(0)
     , m_y(0)
     , m_angle(0.0f)
-    , m_health(3)  
+    , m_health(3)
     , m_hitTimer(0.0f)
-
 {
 }
 
@@ -18,19 +18,26 @@ Player::~Player()
 {
     delete m_pSprite;
     m_pSprite = 0;
+    delete m_pBgSprite;
+    m_pBgSprite = 0;
 }
+
 
 bool Player::Initialise(Renderer& renderer)
 {
-    m_pSprite = renderer.CreateSprite("..\\assets\\player.png");
-    if (m_pSprite == 0)
+    m_pBgSprite = renderer.CreateSprite("..\\assets\\player.png");
+    m_pSprite = renderer.CreateSprite("..\\assets\\hitbox.png");
+    if (m_pSprite == 0 || m_pBgSprite == 0)
     {
         return false;
     }
     m_pSprite->SetX(m_x);
     m_pSprite->SetY(m_y);
+    m_pBgSprite->SetX(m_x);
+    m_pBgSprite->SetY(m_y);
     return true;
 }
+
 
 void Player::Process(float deltaTime)
 {
@@ -47,14 +54,22 @@ void Player::Process(float deltaTime)
 
 void Player::Draw(Renderer& renderer)
 {
+    if (m_pBgSprite)
+    {
+        m_pBgSprite->SetX(m_x);
+        m_pBgSprite->SetY(m_y - 5);  
+        m_pBgSprite->SetAngle(m_angle);
+        m_pBgSprite->Draw(renderer);
+    }
     if (m_pSprite)
     {
         m_pSprite->SetX(m_x);
         m_pSprite->SetY(m_y);
-        m_pSprite->Draw(renderer);
         m_pSprite->SetAngle(m_angle);
+        m_pSprite->Draw(renderer);
     }
 }
+
 
 void Player::TakeDamage(int amount)
 {

@@ -32,13 +32,14 @@ protected:
 private:
     Player(const Player& other);
     Player& operator=(const Player& other);
-
-    Sprite* m_pSprite;
     float m_x;
     float m_y;
     float m_angle;
     float m_hitTimer; 
     int m_health; 
+
+    Sprite* m_pSprite;       
+    Sprite* m_pBgSprite;    
 };
 
 #endif // PLAYER_H
