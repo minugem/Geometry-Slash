@@ -299,7 +299,6 @@ void SceneGame::Process(float deltaTime)
         }
     }
 
-    // After handling all bullet collisions and enemy damage
     if (m_pEnemy && m_pEnemy->GetHealth() <= 0)
     {
         // Deactivate all enemy bullets
@@ -310,7 +309,11 @@ void SceneGame::Process(float deltaTime)
 
         // Stop the timer
         m_timerStarted = false;
+
+        // Switch to win scene (assuming it's at index 2)
+        Game::GetInstance().m_iCurrentScene = 2;
     }
+
 
 
     if (m_showControls && m_pControls)

@@ -45,6 +45,7 @@ public:
 	FMOD::System* m_pFmodSystem;
 	FMOD::Sound* m_pFmodSound1;
 	FMOD_RESULT result;
+	int m_iCurrentScene;
 
 
 protected:
@@ -53,7 +54,6 @@ protected:
 	Sprite* m_pCheckerboard;
 
 	std::vector<Scene*> m_scenes;
-	int m_iCurrentScene;
 
 	InputSystem* m_pInputSystem;
 	
