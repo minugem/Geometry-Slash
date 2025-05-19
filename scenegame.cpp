@@ -31,6 +31,10 @@ SceneGame::~SceneGame()
     delete m_pInputSystem; // Clean up
     m_pInputSystem = 0;
     delete m_pBullet;
+	m_pBullet = 0;
+    delete m_pControls;
+    m_pControls = 0;
+
 }
 
 
@@ -83,6 +87,16 @@ bool SceneGame::Initialise(Renderer& renderer)
     {
         return false;
     }
+
+    m_pControls = renderer.CreateSprite("..\\assets\\controls.png");
+    if (m_pControls == 0)
+    {
+        return false;
+    }
+    m_controlsAlpha = 0.0f;     // Start fully transparent
+    m_controlsTimer = 0.0f;     // Timer for how long it's been shown
+    m_showControls = true;      // Show at start
+
 
     return true;
 }
@@ -146,6 +160,41 @@ void SceneGame::Process(float deltaTime)
             bullet->Process(deltaTime);
     }
 
+
+    if (m_showControls && m_pControls)
+    {
+        const float fadeInTime = 1.0f;    // seconds to fade in
+        const float holdTime = 5.0f;      // seconds to stay fully visible
+        const float fadeOutTime = 1.0f;   // seconds to fade out
+        const float totalTime = fadeInTime + holdTime + fadeOutTime;
+
+        m_controlsTimer += deltaTime;
+
+        if (m_controlsTimer < fadeInTime)
+        {
+            // Fade in
+            m_controlsAlpha = m_controlsTimer / fadeInTime;
+        }
+        else if (m_controlsTimer < fadeInTime + holdTime)
+        {
+            // Hold
+            m_controlsAlpha = 1.0f;
+        }
+        else if (m_controlsTimer < totalTime)
+        {
+            // Fade out
+            float t = (m_controlsTimer - fadeInTime - holdTime) / fadeOutTime;
+            m_controlsAlpha = 1.0f - t;
+        }
+        else
+        {
+            // Done
+            m_controlsAlpha = 0.0f;
+            m_showControls = false;
+        }
+    }
+
+
 }
 
 
@@ -179,6 +228,23 @@ void SceneGame::Draw(Renderer& renderer)
         if (bullet->IsActive())
             bullet->Draw(renderer);
     }
+
+    if (m_showControls && m_pControls)
+    {
+        // Center the controls sprite
+        int screenWidth = renderer.GetWidth();
+        int screenHeight = renderer.GetHeight();
+        int controlsWidth = m_pControls->GetWidth();
+        int controlsHeight = m_pControls->GetHeight();
+        int controlsX = (screenWidth - controlsWidth) / 2;
+        int controlsY = (screenHeight - controlsHeight) / 2;
+
+        m_pControls->SetX(controlsX);
+        m_pControls->SetY(controlsY);
+        m_pControls->SetAlpha(m_controlsAlpha);  // Set transparency (0 = invisible, 1 = opaque)
+        m_pControls->Draw(renderer);
+    }
+
 
 
 }

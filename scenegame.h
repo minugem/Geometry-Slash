@@ -31,6 +31,11 @@ public:
 
     virtual void DebugDraw();
     virtual void SyncCurrentScene(int* m_iCurrentScene, std::vector<Scene*>* m_scenes);
+    // Fade-in/out for controls.png
+    Sprite* m_pControls;
+    float m_controlsAlpha;
+    float m_controlsTimer;
+    bool m_showControls;
 
 protected:
     bool m_quitRequested;
