@@ -262,6 +262,18 @@ void SceneGame::Process(float deltaTime)
         }
     }
 
+    // After handling all bullet collisions and enemy damage
+    if (m_pEnemy && m_pEnemy->GetHealth() <= 0)
+    {
+        // Deactivate all enemy bullets
+        for (auto eb : m_enemyBullets)
+        {
+            eb->SetActive(false);
+        }
+
+        // Stop the timer
+        m_timerStarted = false;
+    }
 
 
     if (m_showControls && m_pControls)
