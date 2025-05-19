@@ -10,6 +10,8 @@
 
 #include "scenesplashaut.h"
 #include "scenewin.h"
+#include "scenelose.h"
+
 
 #include "scenegame.h"
 
@@ -99,6 +101,11 @@ bool Game::Initialise()
 	pScene = new SceneWin();
 	pScene->Initialise(*m_pRenderer);
 	m_scenes.push_back(pScene);
+
+	pScene = new SceneLose();
+	pScene->Initialise(*m_pRenderer);
+	m_scenes.push_back(pScene);
+
 	//Initial Scene
 	m_iCurrentScene = 0;
 

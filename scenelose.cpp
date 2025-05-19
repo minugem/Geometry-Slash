@@ -1,38 +1,34 @@
-#include "scenewin.h"
+#include "scenelose.h"
 #include "renderer.h"
 #include "sprite.h"
-#include <iostream>
 #include "game.h"
 #include "inputsystem.h"
 #include "scenegame.h"
+SceneLose::SceneLose() {}
 
-SceneWin::SceneWin()
-{
-}
-
-SceneWin::~SceneWin()
+SceneLose::~SceneLose()
 {
     delete m_pBackground;
     m_pBackground = nullptr;
-    delete m_pWinScreen;
-    m_pWinScreen = nullptr;
+    delete m_pLoseScreen;
+    m_pLoseScreen = nullptr;
 
 }
 
 
 
-bool SceneWin::Initialise(Renderer& renderer)
+bool SceneLose::Initialise(Renderer& renderer)
 {
     m_pBackground = renderer.CreateSprite("..\\assets\\background.png");
-    m_pWinScreen = renderer.CreateSprite("..\\assets\\winscreen.png");
+    m_pLoseScreen = renderer.CreateSprite("..\\assets\\losescreen.png");
     m_pInputSystem = new InputSystem();
     m_pInputSystem->Initialise();
-    return (m_pBackground != nullptr) && (m_pWinScreen != nullptr);
+    return (m_pBackground != nullptr) && (m_pLoseScreen != nullptr);
 }
 
 
 
-void SceneWin::Process(float /*deltaTime*/)
+void SceneLose::Process(float /*deltaTime*/)
 {
     if (!m_pInputSystem) return;
 
@@ -60,8 +56,10 @@ void SceneWin::Process(float /*deltaTime*/)
     }
 }
 
+void SceneLose::DebugDraw() {}
+void SceneLose::SyncCurrentScene(int*, std::vector<Scene*>*) {}
 
-void SceneWin::Draw(Renderer& renderer)
+void SceneLose::Draw(Renderer& renderer)
 {
     // Tile the background
     if (m_pBackground)
@@ -81,24 +79,15 @@ void SceneWin::Draw(Renderer& renderer)
             }
         }
     }
-
-    // Draw the win screen sprite centered (origin is center)
-    if (m_pWinScreen)
+    // Draw the lose screen sprite centered (origin is center)
+    if (m_pLoseScreen)
     {
         int screenWidth = renderer.GetWidth();
         int screenHeight = renderer.GetHeight();
-
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
-
-        m_pWinScreen->SetX(centerX);
-        m_pWinScreen->SetY(centerY);
-        m_pWinScreen->Draw(renderer);
+        m_pLoseScreen->SetX(centerX);
+        m_pLoseScreen->SetY(centerY);
+        m_pLoseScreen->Draw(renderer);
     }
 }
-
-
-
-
-void SceneWin::DebugDraw() {}
-void SceneWin::SyncCurrentScene(int*, std::vector<Scene*>*) {}

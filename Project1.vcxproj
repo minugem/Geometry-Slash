@@ -40,6 +40,7 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scenegame.cpp" />
+    <ClCompile Include="scenelose.cpp" />
     <ClCompile Include="scenesplashaut.cpp" />
     <ClCompile Include="scenewin.cpp" />
     <ClCompile Include="shader.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scenegame.h" />
+    <ClInclude Include="scenelose.h" />
     <ClInclude Include="scenesplashaut.h" />
     <ClInclude Include="scenewin.h" />
     <ClInclude Include="shader.h" />

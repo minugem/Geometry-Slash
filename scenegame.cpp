@@ -205,13 +205,6 @@ void SceneGame::Process(float deltaTime)
     }
 
 
-    // Quit on Q key press
-    if (m_pInputSystem->GetKeyState(SDL_SCANCODE_Q) == BS_PRESSED)
-    {
-        Game::GetInstance().Quit();
-        return; // Optionally return early
-    }
-
     float moveSpeed = 250.0f;
     float dx = 0.0f, dy = 0.0f;
     float rotateSpeed = 180.0f; // degrees per second
@@ -399,6 +392,21 @@ void SceneGame::Process(float deltaTime)
                 }
             }
         }
+    }
+
+    if (m_pPlayer && m_pPlayer->GetHealth() <= 0)
+    {
+        // Deactivate all enemy bullets
+        for (auto eb : m_enemyBullets)
+        {
+            eb->SetActive(false);
+        }
+
+        // Stop the timer
+        m_timerStarted = false;
+
+        // Switch to lose scene (assuming it's at index 3)
+        Game::GetInstance().m_iCurrentScene = 3;
     }
 
 

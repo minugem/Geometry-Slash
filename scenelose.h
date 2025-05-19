@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <vector>
 #include "scene.h"
 #include "sprite.h"
@@ -8,11 +7,11 @@ class InputSystem;
 
 class Renderer;
 
-class SceneWin : public Scene
+class SceneLose : public Scene
 {
 public:
-    SceneWin();
-    ~SceneWin();
+    SceneLose();
+    ~SceneLose();
 
     bool Initialise(Renderer& renderer);
     void Process(float deltaTime);
@@ -22,7 +21,6 @@ public:
 
 private:
     Sprite* m_pBackground = nullptr;
-    Sprite* m_pWinScreen = nullptr;
+    Sprite* m_pLoseScreen = nullptr;
     InputSystem* m_pInputSystem = nullptr;
-
 };

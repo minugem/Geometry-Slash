@@ -22,7 +22,8 @@ public:
 	static void DestroyInstance();
 
 	void ToggleDebugWindow();
-
+	Renderer* GetRenderer() const { return m_pRenderer; }
+	std::vector<Scene*>& GetScenes() { return m_scenes; }
 	bool Initialise();
 	bool DoGameLoop();
 	void Quit();
