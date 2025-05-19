@@ -3,7 +3,7 @@
 #include "sprite.h"
 
 Enemy::Enemy()
-    : m_pSprite(0), m_x(0), m_y(0), m_health(1), m_hitTimer(0.0f)
+    : m_pSprite(0), m_x(0), m_y(0), m_health(200), m_hitTimer(0.0f)
 {
 }
 

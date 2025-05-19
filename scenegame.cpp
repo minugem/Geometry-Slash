@@ -72,7 +72,7 @@ bool SceneGame::Initialise(Renderer& renderer)
     if (!m_pEnemy->Initialise(renderer))
         return false;
 
-    const int maxEnemyBullets = 10;
+    const int maxEnemyBullets = 100000;
     for (int i = 0; i < maxEnemyBullets; ++i)
     {
         EnemyBullet* eb = new EnemyBullet();
@@ -170,6 +170,8 @@ void SceneGame::Process(float deltaTime)
     float spawnY = m_pEnemy->GetY() ;
     float targetX = m_pPlayer->GetX();
     float targetY = m_pPlayer->GetY();
+    int randomInt = rand() % 1080;
+    float randomFloat = ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f;
 
     float prevGameTimer = m_gameTimer;
 
@@ -179,6 +181,8 @@ void SceneGame::Process(float deltaTime)
         m_gameTimer += deltaTime;
     }
 
+
+    // Enemy Projectiles
     if (prevGameTimer < 1.0f && m_gameTimer >= 1.0f)
     {
         SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
@@ -203,6 +207,202 @@ void SceneGame::Process(float deltaTime)
     {
         SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
     }
+
+    if (prevGameTimer < 4.5f && m_gameTimer >= 4.5f)
+    {
+        SpawnEnemyBullet(0, 0, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(1080, 0, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 5.0f && m_gameTimer >= 5.0f)
+    {
+        SpawnEnemyBullet(0, 720, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(1080, 720, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 6.0f && m_gameTimer >= 6.0f)
+    {
+        SpawnEnemyBullet(540, 0, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(540, 720, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(0, 360, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(1080, 360, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 7.0f && m_gameTimer >= 7.0f)
+    {
+        SpawnEnemyBullet(540, 0, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(540, 720, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(0, 360, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(1080, 360, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 7.5f && m_gameTimer >= 7.5f)
+    {
+        SpawnEnemyBullet(0, 720, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(1080, 720, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(0, 0, targetX, targetY, 300.0f);
+        SpawnEnemyBullet(1080, 0, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 8.0f && m_gameTimer >= 8.0f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 300.0f);
+    }
+
+    if (prevGameTimer < 8.5f && m_gameTimer >= 8.5f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 350.0f);
+    }
+
+    if (prevGameTimer < 9.0f && m_gameTimer >= 9.0f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 400.0f);
+    }
+
+    if (prevGameTimer < 9.5f && m_gameTimer >= 9.5f)
+    {
+        SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, 450.0f);
+    }
+
+    if (prevGameTimer < 10.0f && m_gameTimer >= 10.0f)
+    {
+        SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+    }
+
+    if (prevGameTimer < 10.5f && m_gameTimer >= 10.5f)
+    {
+        SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+    }
+
+    if (prevGameTimer < 11.0f && m_gameTimer >= 11.0f)
+    {
+        SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+    }
+
+    if (prevGameTimer < 11.5f && m_gameTimer >= 11.5f)
+    {
+        SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+    }
+
+    if (prevGameTimer < 12.0f && m_gameTimer >= 12.0f)
+    {
+        SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+    }
+
+	if (prevGameTimer < 12.5f && m_gameTimer >= 12.5f)
+	{
+		SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+	}
+
+	if (prevGameTimer < 13.0f && m_gameTimer >= 13.0f)
+	{
+		SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+	}
+
+    if (prevGameTimer < 13.5f && m_gameTimer >= 13.5f)
+    {
+        SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, 450.0f);
+
+    }
+        if (prevGameTimer < 13.5f && m_gameTimer >= 13.5f)
+        {
+            SpawnEnemyBullet(rand() % 1080, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+        }
+
+        if (prevGameTimer < 13.5f && m_gameTimer >= 13.5f)
+        {
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+        }
+
+        if (prevGameTimer < 13.5f && m_gameTimer >= 13.5f)
+        {
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+        }
+
+        if (prevGameTimer < 15.0f && m_gameTimer >= 15.0f)
+        {
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX)* (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX)* (500.0f - 100.0f) + 100.0f);
+
+        }
+
+        if (prevGameTimer < 16.5f && m_gameTimer >= 16.5f)
+        {
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX)* (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX)* (500.0f - 100.0f) + 100.0f);
+        }
+
+        if (prevGameTimer < 18.0f && m_gameTimer >= 18.0f)
+        {
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+            SpawnEnemyBullet(spawnX, spawnY, targetX, targetY, ((float)rand() / RAND_MAX) * (500.0f - 100.0f) + 100.0f);
+        }
+
+        if (prevGameTimer < 20.0f && m_gameTimer >= 20.0f)
+        {
+            SpawnEnemyBullet(targetX+300, targetY+300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX+300, targetY-300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX-300, targetY+300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX-300, targetY-300, targetX, targetY, 300.0f);
+        }
+
+        if (prevGameTimer < 22.0f && m_gameTimer >= 22.0f)
+        {
+            SpawnEnemyBullet(targetX + 300, targetY + 300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX + 300, targetY - 300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 300, targetY + 300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 300, targetY - 300, targetX, targetY, 300.0f);
+        }
+
+        if (prevGameTimer < 24.0f && m_gameTimer >= 24.0f)
+        {
+            SpawnEnemyBullet(targetX + 300, targetY + 300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX + 300, targetY - 300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 300, targetY + 300, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 300, targetY - 300, targetX, targetY, 300.0f);
+        }
+
+        if (prevGameTimer < 26.0f && m_gameTimer >= 26.0f)
+        {
+            SpawnEnemyBullet(targetX + 400, targetY, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 400, targetY, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX, targetY + 400, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX, targetY - 400, targetX, targetY, 300.0f);
+        }
+
+        if (prevGameTimer < 28.0f && m_gameTimer >= 28.0f)
+        {
+            SpawnEnemyBullet(targetX + 400, targetY, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 400, targetY, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX, targetY + 400, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX, targetY - 400, targetX, targetY, 300.0f);
+        }
+
+        if (prevGameTimer < 30.0f && m_gameTimer >= 30.0f)
+        {
+            SpawnEnemyBullet(targetX + 400, targetY, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX - 400, targetY, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX, targetY + 400, targetX, targetY, 300.0f);
+            SpawnEnemyBullet(targetX, targetY - 400, targetX, targetY, 300.0f);
+        }
+
+        if (prevGameTimer < 31.0f && m_gameTimer >= 31.0f)
+        {
+			prevGameTimer = 0.0f;
+			m_gameTimer = 0.0f;
+        }
+
+    
+
+
 
 
     float moveSpeed = 250.0f;
@@ -317,8 +517,10 @@ void SceneGame::Process(float deltaTime)
         m_timerStarted = false;
 
         // Switch to win scene (assuming it's at index 2)
-        Game::GetInstance().m_iCurrentScene = 2;
+        Game::GetInstance().m_iCurrentScene = 1;
     }
+
+
 
 
 
@@ -406,7 +608,7 @@ void SceneGame::Process(float deltaTime)
         m_timerStarted = false;
 
         // Switch to lose scene (assuming it's at index 3)
-        Game::GetInstance().m_iCurrentScene = 3;
+        Game::GetInstance().m_iCurrentScene = 2;
     }
 
 
@@ -422,6 +624,7 @@ void SceneGame::Draw(Renderer& renderer)
         int screenHeight = renderer.GetHeight();
         int tileWidth = m_pCheckerboard->GetWidth();
         int tileHeight = m_pCheckerboard->GetHeight();
+       
 
         for (int y = 0; y < screenHeight; y += tileHeight)
         {

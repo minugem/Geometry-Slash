@@ -9,7 +9,7 @@ Player::Player()
     , m_x(0)
     , m_y(0)
     , m_angle(0.0f)
-    , m_health(3)
+    , m_health(5)
     , m_hitTimer(0.0f)
 {
 }
