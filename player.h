@@ -14,7 +14,7 @@ public:
     bool Initialise(Renderer& renderer);
     void Process(float deltaTime);
     void Draw(Renderer& renderer);
-
+    void TakeDamage(int amount);
     void SetX(float x);
     void SetY(float y);
     float GetX() const;
@@ -37,8 +37,8 @@ private:
     float m_x;
     float m_y;
     float m_angle;
-
-    int m_health;  // Added health variable
+    float m_hitTimer; 
+    int m_health; 
 };
 
 #endif // PLAYER_H

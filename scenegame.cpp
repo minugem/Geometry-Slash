@@ -308,6 +308,34 @@ void SceneGame::Process(float deltaTime)
             eb->Process(deltaTime);
     }
 
+    if (m_pPlayer && m_pPlayer->GetHealth() > 0)
+    {
+        float px = m_pPlayer->GetX();
+        float py = m_pPlayer->GetY();
+        int pw = m_pPlayer->GetWidth();
+        int ph = m_pPlayer->GetHeight();
+
+        for (auto eb : m_enemyBullets)
+        {
+            if (eb->IsActive())
+            {
+                float bx = eb->GetX();
+                float by = eb->GetY();
+                int bw = eb->GetWidth();
+                int bh = eb->GetHeight();
+
+                // Axis-Aligned Bounding Box (AABB) collision
+                if (bx < px + pw && bx + bw > px &&
+                    by < py + ph && by + bh > py)
+                {
+                    eb->SetActive(false); // Bullet disappears
+                    m_pPlayer->TakeDamage(1); // Player loses 1 health and flashes red
+                    break; // Only one bullet can hit at a time
+                }
+            }
+        }
+    }
+
 
 
 }

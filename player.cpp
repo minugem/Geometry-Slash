@@ -8,7 +8,9 @@ Player::Player()
     , m_x(0)
     , m_y(0)
     , m_angle(0.0f)
-    , m_health(100)  // Initialize health to 100 or any default value
+    , m_health(100)  
+    , m_hitTimer(0.0f)
+
 {
 }
 
@@ -30,10 +32,18 @@ bool Player::Initialise(Renderer& renderer)
     return true;
 }
 
-void Player::Process(float /*deltaTime*/)
+void Player::Process(float deltaTime)
 {
-    // Add movement or logic here if needed
+    if (m_hitTimer > 0.0f) {
+        m_hitTimer -= deltaTime;
+        if (m_hitTimer <= 0.0f && m_pSprite) {
+            m_pSprite->SetRedTint(1.0f);
+            m_pSprite->SetGreenTint(1.0f);
+            m_pSprite->SetBlueTint(1.0f);
+        }
+    }
 }
+
 
 void Player::Draw(Renderer& renderer)
 {
@@ -45,6 +55,18 @@ void Player::Draw(Renderer& renderer)
         m_pSprite->SetAngle(m_angle);
     }
 }
+
+void Player::TakeDamage(int amount)
+{
+    m_health -= amount;
+    m_hitTimer = 0.1f; // Flash duration
+    if (m_pSprite) {
+        m_pSprite->SetRedTint(1.0f);
+        m_pSprite->SetGreenTint(0.0f);
+        m_pSprite->SetBlueTint(0.0f);
+    }
+}
+
 
 void Player::SetX(float x)
 {
@@ -96,3 +118,4 @@ int Player::GetHealth() const
 {
     return m_health;
 }
+
